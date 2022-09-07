@@ -7,6 +7,7 @@ class BaseController {
 
 
   async getAll(req, res) {
+    console.log('get all')
     try {
       const output = await this.model.findAll();
       return res.json(output);
@@ -14,6 +15,8 @@ class BaseController {
       return res.status(400).json({ error: true, msg: err });
     }
   }
+
+  
 }
 
 module.exports = BaseController;
