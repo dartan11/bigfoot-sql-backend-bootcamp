@@ -1,6 +1,6 @@
 const BaseController = require("./baseController");
 
-class SightingsController extends BaseController {
+class CategoriesController extends BaseController {
   constructor(model, commentsModel) {
     super(model);
     //why no need commentsModel in super?
@@ -21,15 +21,12 @@ class SightingsController extends BaseController {
   //so the new entry put camelCase or snake_case ?
   //the different outcome if we put either or?
   async addOne(req, res) {
-    const { date, location, notes, categoryId } = req.body;
+    const { name } = req.body;
     try {
       const newEntry = await this.model.create({
         //dont even need the createdat and updatedat bc migration&PSQL makes it for us automatically
-        date: date,
-        location: location,
-        notes: notes,
+        name: name,
       });
-      await newEntry.setCategories(categoryId);
       return res.json(newEntry);
       //return to front end
     } catch (err) {
@@ -95,4 +92,4 @@ class SightingsController extends BaseController {
   }
 }
 
-module.exports = SightingsController;
+module.exports = CategoriesController;
