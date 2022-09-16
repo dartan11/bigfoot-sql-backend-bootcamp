@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 
 //this model refers to what? a function/class/method
 //if import model by itself anywhere without the model files, what will we get?
@@ -15,27 +13,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       //what is 'models' here and take from where?
-//say the relationships here
+      //say the relationships here
       // define association here
       // A.belongsTo(B)
       //big S or small S?
-      this.belongsTo(models.sighting)
+      this.belongsTo(models.sighting, { onDelete: "CASCADE", hooks: true });
     }
   }
-  Comment.init({
-    content: DataTypes.STRING,
-    sightingId:{type:DataTypes.INTEGER,
-      references: {
+  Comment.init(
+    {
+      content: DataTypes.STRING,
+      sightingId: {
+        type: DataTypes.INTEGER,
+        references: {
           // Sequelize docs suggest this should be plural table name and not singular model name
           // https://sequelize.org/api/v6/class/src/model.js~model#static-method-init
           model: "sighting",
           key: "id",
         },
-}
-  }, {
-    sequelize,
-    modelName: 'comment',
-     underscored: true
-  });
+      },
+    },
+    {
+      sequelize,
+      modelName: "comment",
+      underscored: true,
+    }
+  );
   return Comment;
 };

@@ -14,6 +14,7 @@ module.exports = {
           model: "sightings",
           key: "id",
         },
+        onDelete: "cascade",
         allowNull: false,
       },
       category_id: {
@@ -22,6 +23,7 @@ module.exports = {
           model: "categories",
           key: "id",
         },
+        onDelete: "cascade",
         allowNull: false,
       },
       created_at: {

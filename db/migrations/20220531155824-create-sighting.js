@@ -1,12 +1,15 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('sightings', {
+    await queryInterface.createTable("sightings", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        //whenever we delete a sighting, it will cascade to all other associations and delete them there as well
+        //associated with this sightingId
+        onDelete: "CASCADE",
       },
       date: {
         type: Sequelize.DATE,
@@ -28,6 +31,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('sightings');
+    await queryInterface.dropTable("sightings");
   },
 };

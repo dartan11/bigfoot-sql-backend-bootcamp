@@ -21,6 +21,8 @@ class SightingsController extends BaseController {
   //so the new entry put camelCase or snake_case ?
   //the different outcome if we put either or?
   async addOne(req, res) {
+    console.log("adding sighting!");
+    console.log(req.body, "req body");
     const { date, location, notes, categoryId } = req.body;
     try {
       const newEntry = await this.model.create({
@@ -38,6 +40,26 @@ class SightingsController extends BaseController {
     }
   }
 
+  async deleteOne(req, res) {
+    console.log("deleting!");
+    console.log(req.body, "req.body");
+    //const {sightingId} = req.body
+    const { sightingId } = req.params;
+    try {
+      await this.model.destroy({
+        where: {
+          id: sightingId,
+        },
+      });
+
+      return res.send("done");
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  }
+
+  // .destroy({where: {id: {$in: userIds}}})
+
   async getAllComments(req, res) {
     console.log("all comments");
     const { sightingId } = req.params;
@@ -47,6 +69,7 @@ class SightingsController extends BaseController {
         where: {
           sightingId: sightingId,
         },
+        order: [["id", "ASC"]],
       });
       return res.json(output);
     } catch (err) {
